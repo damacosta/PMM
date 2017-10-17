@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">ListaMatriz</string>
+
+    <string name="lista1_prompt">Android Vendors (Choices from XML)</string>
+    <string-array name="lista1_entries">
+        <item>Acer</item>
+        <item>Dell</item>
+        <item>HTC</item>
+        <item>Huawei</item>
+        <item>Kyocera</item>
+        <item>LG</item>
+        <item>Motorola</item>
+        <item>Nexus</item>
+        <item>Samsung</item>
+        <item>Sony Ericsson</item>
+        <item>T-Mobile</item>
+        <item>Neptune</item>
+    </string-array>
+
+    <string name="list_message_template">You selected \'%s\'. 21 </string>
+
+</resources>
