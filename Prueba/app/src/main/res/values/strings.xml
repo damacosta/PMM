@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Mi primera app</string>
+    <string name="saludo">Hola a todas </string>
+    <string name="escribe">Escribe a quien quieres saludar</string>
+    <string name="pulsar">Pulsame para saludar</string>
+
+</resources>
