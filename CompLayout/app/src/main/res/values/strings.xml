@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CompLayout</string>
+    <string name="title_activity_pantalla3">Pantalla3</string>
+    <string name="strMessage"></string>
+</resources>
