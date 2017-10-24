@@ -66,5 +66,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(miIntent1);
             }
         });
+
+        final Button botoncalculadora = (Button) findViewById(R.id.button7);
+        botoncalculadora.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent miIntent1 = new Intent(MainActivity.this, Calculadora.class);
+                startActivity(miIntent1);
+            }
+        });
+
     }
 }

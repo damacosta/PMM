@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.alemen.complayout.Calculadora">
+
+    <EditText
+        android:id="@+id/numero1"
+        android:layout_width="147dp"
+        android:layout_height="41dp"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="119dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp" />
+    <EditText
+        android:id="@+id/numero2"
+        android:layout_width="147dp"
+        android:layout_height="41dp"
+        tools:layout_editor_absoluteX="119dp"
+        android:layout_below="@+id/numero1"
+        android:layout_alignLeft="@+id/numero1"
+        android:layout_alignStart="@+id/numero1"
+        android:layout_marginTop="30dp" />
+
+    <RadioGroup
+        android:id="@+id/operacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        tools:layout_editor_absoluteX="138dp"
+        tools:layout_editor_absoluteY="147dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+        <RadioButton
+            android:id="@+id/suma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="SUMA" />
+        <RadioButton
+            android:id="@+id/resta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="RESTA" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/resultado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/numero2"
+        android:layout_alignRight="@+id/numero2"
+        android:layout_below="@+id/operacion"
+        android:layout_marginTop="26dp"
+        android:text="RESULTADO"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="359dp" />
+
+    <EditText
+        android:id="@+id/resultadooperacion"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="359dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="21dp" />
+
+
+</RelativeLayout>
