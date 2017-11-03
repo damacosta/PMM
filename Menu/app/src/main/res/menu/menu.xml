@@ -5,10 +5,8 @@
     <item android:id="@+id/MnuOpc2" android:title="RELLENAR FIGURA">
     <menu>
         <item android:id="@+id/SubMnuOpc1"
-            android:title="TRIANGULO" />
+            android:title="RECTÁNGULO" />
         <item android:id="@+id/SubMnuOpc2"
-            android:title="CUADRADO" />
-        <item android:id="@+id/SubMnuOpc3"
             android:title="CIRCULO" />
     </menu></item>
     <item android:id="@+id/MnuOpc3" android:title="INFORMACIÓN"></item>

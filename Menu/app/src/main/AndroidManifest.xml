@@ -16,7 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".info"></activity>
+        <activity android:name=".info" />
+        <activity android:name=".cuadrado" />
+        <activity android:name=".circulo" />
+        <activity android:name=".rellenarC" />
+        <activity android:name=".rellenarcirculo" />
     </application>
 
 </manifest>
