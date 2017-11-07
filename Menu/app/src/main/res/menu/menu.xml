@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/MnuOpc1" android:title="Opcion1"></item>
+    <item android:id="@+id/MnuOpc1" android:title="JUEGO"></item>
     <item android:id="@+id/MnuOpc2" android:title="RELLENAR FIGURA">
     <menu>
         <item android:id="@+id/SubMnuOpc1"
             android:title="RECTÁNGULO" />
         <item android:id="@+id/SubMnuOpc2"
             android:title="CIRCULO" />
+        <item android:id="@+id/SubMnuOpc3"
+            android:title="RANDOM" />
     </menu></item>
     <item android:id="@+id/MnuOpc3" android:title="INFORMACIÓN"></item>
 </menu>

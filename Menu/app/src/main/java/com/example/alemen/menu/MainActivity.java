@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent circulo = new Intent(MainActivity.this, circulo.class);
                 startActivity(circulo);
                 return true;
+            case R.id.SubMnuOpc3:
+                Intent random = new Intent(MainActivity.this, random.class);
+                startActivity(random);
+                return true;
             case R.id.MnuOpc3:
                 Intent informacion = new Intent(MainActivity.this, info.class);
                 startActivity(informacion);

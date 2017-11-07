@@ -21,6 +21,9 @@
         <activity android:name=".circulo" />
         <activity android:name=".rellenarC" />
         <activity android:name=".rellenarcirculo" />
+        <activity android:name=".random" />
+        <activity android:name=".DrawShapes1" />
+        <activity android:name=".DrawShapes2" />
     </application>
 
 </manifest>
