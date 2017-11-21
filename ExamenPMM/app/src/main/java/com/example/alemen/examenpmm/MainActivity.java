@@ -65,89 +65,94 @@ public class MainActivity extends AppCompatActivity {
         TUrgente = (RadioButton)findViewById(R.id.TUrgente);
         final Spinner zona = (Spinner) findViewById(R.id.spinner1);
         final Button botonpasar = (Button) findViewById(R.id.button1);
+        final RadioGroup selecgroup = (RadioGroup) findViewById(R.id.group);
+        regalo = (CheckBox) findViewById(R.id.regalo);
+        tarjeta = (CheckBox) findViewById(R.id.tarjeta);
         //Al pulsar el botón calcular hace todo esto
         botonpasar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent miIntent = new Intent (MainActivity.this, resultado.class);
-
                 //Para recoger la zona seleccionada
                 Bundle miBundle = new Bundle();
+                regalo.setChecked(false);
+                tarjeta.setChecked(false);
+                precio = 0;
+
                 String mensajeSpinner = "" + zona.getSelectedItem();
-                if (mensajeSpinner == "Zona A: Asia y Oceanía: 30 €") {
+                if (mensajeSpinner.equals("Zona A: Asia y Oceanía: 30 €")) {
                     precio = precio + 30;
+                }
+
+                if (mensajeSpinner.equals("Zona B: América y África 20 €")) {
+                    precio = precio + 20;
+                }
+
+                if (mensajeSpinner.equals("Zona C: Europa 10 €")) {
+                    precio = precio + 10;
                 }
 
                 miBundle.putString("ZONA", mensajeSpinner);
 
                 //Para recoger los kilos del paquete
-                Bundle miBundle2 = new Bundle();
                 String numeroKilos = "" + kilosnumero.getText();
-                miBundle2.putString("KILOS", numeroKilos);
+                double numK = Double.parseDouble(numeroKilos);
+
+                if (numK > 0 && numK < 6) {
+                    precio = precio + numK;
+                }
+                if (numK > 6 && numK < 10) {
+                    numK = numK * 1.5;
+                    precio = precio + numK;
+                }
+
+                if (numK > 10) {
+                    numK = numK * 2;
+                    precio = precio + numK;
+                }
+
+                miBundle.putString("KILOS", "Kilos seleccionados: " + numeroKilos);
 
                 //Para recoger los detalles
-                Bundle miBundle3 = new Bundle();
-                getDetalleClick(v);
-                miBundle3.putString("DETALLES", strMessage);
+                if (regalo.isChecked()) {
+                    strMessage = "Caja Regalo";
+                }
+                if (tarjeta.isChecked()) {
+                    strMessage = "Tarjeta Personalizada";
+                }
+
+                if (tarjeta.isChecked() && regalo.isChecked()) {
+                    strMessage = "Caja Regalo y Tarjeta Personalizada";
+                }
+
+                if (tarjeta.isChecked()==false && regalo.isChecked()==false) {
+                    strMessage = "Sin detalles";
+                }
+
+                miBundle.putString("DETALLES", "Detalles elegidos: "+ strMessage);
+
 
                 //Para recoger la tarifa
-                Bundle miBundle4 = new Bundle();
-                getTarifa(v);
-                miBundle4.putString("TARIFAS", tarifaMsg);
+                if (selecgroup.getCheckedRadioButtonId() == R.id.TNormal) {
+                    tarifaMsg = "Normal";
+                }
+                if (selecgroup.getCheckedRadioButtonId() == R.id.TUrgente) {
+                    precio = precio *1.30;
+                    tarifaMsg = "Urgente";
+                }
+                miBundle.putString("TARIFAS", "Tarifa seleccionada: " + tarifaMsg);
 
-                Bundle miBundle5 = new Bundle();
-                PrecioTotal(v);
-                miBundle5.putString("PRECIO", PrecioTotal);
+
+                PrecioTotal = String.valueOf(precio);
+                miBundle.putString("PRECIO", "Precio total: " + PrecioTotal + "€");
 
 
                 miIntent.putExtras(miBundle);
-                miIntent.putExtras(miBundle2);
-                miIntent.putExtras(miBundle3);
-                miIntent.putExtras(miBundle4);
 
                 startActivity(miIntent);
             }
         });
-        detalles();
-    }
-    public void detalles() {
-        regalo = (CheckBox) findViewById(R.id.regalo);
-        tarjeta = (CheckBox) findViewById(R.id.tarjeta);
-
-        regalo.setChecked(false);
-        tarjeta.setChecked(false);
     }
 
-    public void getDetalleClick(View v) {
-        if (regalo.isChecked()) {
-            strMessage = "Caja Regalo";
-        }
-        if (tarjeta.isChecked()) {
-            strMessage = "Tarjeta Personalizada";
-        }
-
-        if (tarjeta.isChecked() && regalo.isChecked()) {
-            strMessage = "Caja Regalo y Tarjeta Personalizada";
-        }
-    }
-
-    public void PrecioTotal (View v) {
-        PrecioTotal = String.valueOf(precio);
-    }
-    public void getTarifa(View v) {
-        final RadioGroup selecgroup = (RadioGroup) findViewById(R.id.group);
-        selecgroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                if (selecgroup.getCheckedRadioButtonId() == R.id.TNormal) {
-                    tarifaMsg = "Tarifa Normal";
-                }
-                if (selecgroup.getCheckedRadioButtonId() == R.id.TUrgente) {
-                    precio = precio *0.30;
-                    tarifaMsg = "Tarifa Urgente";
-                }
-            }
-        });
-    }
     public void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
