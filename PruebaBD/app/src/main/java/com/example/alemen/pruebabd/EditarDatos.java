@@ -1,55 +1,40 @@
 package com.example.alemen.pruebabd;
 
-import android.app.ListActivity;
-import android.content.Intent;
+import android.app.Activity;
+import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.Activity;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class MainActivity extends Activity {
-
+public class EditarDatos extends AppCompatActivity {
     private Cliente[] datos;
-    public static final int NEW_ITEM = 1;
+    String oldNombre = "";
+    String oldTelefono = "";
+    String newNombre = "";
+    String newTelefono = "";
+    String mensaje = "";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_editar_datos);
 
 
-        //Introducimos 3 clientes de ejemplo
-        //      for (int cont=1; cont<=3; cont++) {
-        //           int codigo = cont;
-        //          String nombre = "Cliente" + cont;
-        //          String telefono = cont + "XXXXXXX";
-        //           bd.execSQL("INSERT INTO Clientes (codigo, nombre, telefono) " +
-        //                   "VALUES (" + codigo + ", '" + nombre + "', '" + telefono + "')");
-        //      }
-
-        //Ejemplo Select1
-        //   		String[] args3 = new String[]{"cli1"};
-        //   		Cursor c = bd.rawQuery("SELECT nombre,telefono FROM Clientes WHERE nombre=? ", args3);
-
+        ClienteSQLite cliBDh = new ClienteSQLite(this, "DBClientes", null, 1);
+        final SQLiteDatabase bd = cliBDh.getWritableDatabase();
 
         Rellenar();
 
@@ -57,11 +42,20 @@ public class MainActivity extends Activity {
         Spinner spinner = findViewById(R.id.spinner);
         spinner.setAdapter(adaptador);
 
+        final EditText Nombre = findViewById(R.id.nuevo_Nombre);
+        final EditText Telefono = findViewById(R.id.nuevo_Telefono);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Rellenar();
-                String mensaje = "Nombre: " + datos[i].getNombre() + " Telefono: " + datos[i].getTelf();
+                mensaje = "Nombre: " + datos[i].getNombre() + " Telefono: " + datos[i].getTelf();
+
+                oldNombre = "" + datos[i].getNombre().toString();
+                oldTelefono = "" + datos[i].getTelf().toString();
+
+                Nombre.setText(oldNombre);
+                Telefono.setText(oldTelefono);
+
                 Toast.makeText(getApplicationContext(), mensaje, Toast.LENGTH_SHORT).show();
             }
 
@@ -71,28 +65,24 @@ public class MainActivity extends Activity {
             }
         });
 
-    }
+        final Button button = findViewById(R.id.button2);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newNombre = "" + Nombre.getText().toString();
+                newTelefono = "" + Telefono.getText().toString();
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
-    }
+                try {
+                    //bd.execSQL("UPDATE Clientes set nombre = '" + newNombre + "' where nombre = '" + oldNombre + "'");
+                    bd.execSQL("UPDATE Clientes set nombre = '" + newNombre + "', telefono = '" + newTelefono + "' where nombre = '" + oldNombre + "'");
+                    Toast.makeText(getApplicationContext(), "ACTUALIZADO", Toast.LENGTH_SHORT).show();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.MnuOpc1:
-                Intent intent = new Intent(MainActivity.this, IngresarDatos.class);
-                startActivityForResult(intent, NEW_ITEM);
-                return true;
-            case R.id.MnuOpc2:
-                Intent intent2 = new Intent(MainActivity.this, EditarDatos.class);
-                startActivity(intent2);
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Fallo al guardar el nuevo cliente", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     public class AdaptadorClientes extends ArrayAdapter {
@@ -146,21 +136,6 @@ public class MainActivity extends Activity {
                 i++;
 
             } while (c.moveToNext());
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == NEW_ITEM) {
-            if (resultCode == Activity.RESULT_OK) {
-                try {
-                    Rellenar();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Error al rellenar", Toast.LENGTH_SHORT).show();
-                }
-            }
         }
     }
 }
