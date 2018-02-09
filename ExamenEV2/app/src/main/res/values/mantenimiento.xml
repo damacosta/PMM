@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pais">
+        <item>Tareas de Mantenimiento</item>
+        <item>Tareas Docentes</item>
+        <item>Tareas de Administración</item>
+    </string-array>
+</resources>
