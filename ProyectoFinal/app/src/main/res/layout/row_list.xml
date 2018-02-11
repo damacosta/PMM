@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/row_team"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentLeft="true"></ImageView>
+
+
+    <TextView
+        android:id="@+id/row_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:layout_marginTop="40dp"
+        android:layout_toRightOf="@id/row_team"/>
+
+    <TextView
+        android:id="@+id/row_price"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/row_name"
+        android:layout_toRightOf="@id/row_team"
+        android:ellipsize="marquee"
+        android:fadingEdge="horizontal"
+        android:textSize="20dp"
+        android:gravity="center"/>
+
+</RelativeLayout>
