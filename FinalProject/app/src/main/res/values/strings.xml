@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FinalProject</string>
+    <string name="info">Este es el proyecto final de PMM desarrollado por Alejandro Costa Menor</string>
+    <string name="title_home">Home</string>
+    <string name="title_view_page">View page</string>
+    <string name="title_all_pages">All pages</string>
+</resources>
