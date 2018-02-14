@@ -4,4 +4,6 @@
     <string name="title_home">Home</string>
     <string name="title_view_page">View page</string>
     <string name="title_favorite_pages">Favorite pages</string>
+    <string name="dataError">Error al obtener los datos</string>
+
 </resources>

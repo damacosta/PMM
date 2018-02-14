@@ -9,7 +9,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
-
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -25,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     return true;
                 case R.id.navigation_notifications:
-
-                    //TODO AÑADIR BASE DE DATOS CON TODAS LAS PÁGINAS CREADAS
+                    Intent intent2 = new Intent(MainActivity.this, FavoritePages.class);
+                    startActivity(intent2);
                     return true;
             }
             return false;

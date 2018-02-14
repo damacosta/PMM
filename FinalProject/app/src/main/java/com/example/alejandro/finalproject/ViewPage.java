@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,8 +16,11 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-//TODO ACABAR BUSCADOR
+import java.sql.SQLException;
+
+//TODO HACER ALERTDIALOG PARA GUARDAR NOMBRE DE PÁGINA WEB
 public class ViewPage extends AppCompatActivity {
 
     Button visualizar;
@@ -24,6 +28,8 @@ public class ViewPage extends AppCompatActivity {
     EditText url;
     TextView textView;
     BottomNavigationView navigation;
+
+    Integer mRowId = null;
 
     //Esto es el menú inferior generado automáticamente por Android Studio al elegir una actividad.
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -36,16 +42,15 @@ public class ViewPage extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.navigation_dashboard:
-
                 return true;
             case R.id.navigation_notifications:
-                //TODO AÑADIR BASE DE DATOS CON TODAS LAS PÁGINAS CREADAS
+                Intent intent2 = new Intent(ViewPage.this, FavoritePages.class);
+                startActivity(intent2);
                 return true;
         }
         return false;
     }
 };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +78,28 @@ public class ViewPage extends AppCompatActivity {
                 Ocultar();
             }
         });
+
+       /* favoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Guardar();
+            }
+        });
+        */
         navigation= findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
 
-    public void Ocultar() {
+    private void showMessage(int message) {
+        Context context = getApplicationContext();
+        CharSequence text = getResources().getString(message);
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+    protected void Ocultar() {
         //Oculta todos los elementos
         visualizar.setVisibility(View.INVISIBLE);
         favoritos.setVisibility(View.INVISIBLE);
@@ -89,7 +110,21 @@ public class ViewPage extends AppCompatActivity {
         //Esto fuerza al teclado virtual a cerrarse (Al escribir en el EditText y no cerrar el teclado sigue apareciendo en la ventana del navegador)
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(visualizar.getWindowToken(), 0);
-
     }
+
+    /*protected void Guardar() {
+        String newUrl = "http://" + url.getText().toString();
+        try{
+            FavoritePages.mDbHelper.open();
+            if (mRowId == null){
+                //insertar
+                FavoritePages.mDbHelper.insertItem(newUrl);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showMessage(R.string.dataError);
+        }
+
+    } */
 
 }
