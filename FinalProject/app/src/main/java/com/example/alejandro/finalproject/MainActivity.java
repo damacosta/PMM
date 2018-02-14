@@ -1,5 +1,7 @@
 package com.example.alejandro.finalproject;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,14 +19,13 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    //TODO AÑADIR FRAGMENTO CON MI INFORMACIÓN
                     return true;
                 case R.id.navigation_dashboard:
-                    //TODO ELIMINAR START ACTIVITY Y AÑADIR FRAGMENTO
-                    Intent intent = new Intent(MainActivity.this, ViewPageHelper.class);
+                    Intent intent = new Intent(MainActivity.this, ViewPage.class);
                     startActivity(intent);
                     return true;
                 case R.id.navigation_notifications:
+
                     //TODO AÑADIR BASE DE DATOS CON TODAS LAS PÁGINAS CREADAS
                     return true;
             }
