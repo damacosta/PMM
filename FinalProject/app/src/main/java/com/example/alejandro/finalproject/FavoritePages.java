@@ -1,18 +1,30 @@
 package com.example.alejandro.finalproject;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,20 +32,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FavoritePages extends ListActivity {
-    public static final int NEW_ITEM = 1;
-    public static final int EDIT_ITEM = 2;
-    public static final int SHOW_ITEM = 3;
 
     private int mLastRowSelected = 0;
     public static DataBaseHelper mDbHelper = null;
 
     int mStackPosition = 1;
+    String newUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_pages);
         mDbHelper = new DataBaseHelper(this);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        //Intenta rellenar la lista y si no salta error
         try {
             fillData();
         } catch (SQLException e) {
@@ -43,6 +56,29 @@ public class FavoritePages extends ListActivity {
         registerForContextMenu(getListView());
     }
 
+    //Esto es el menú inferior generado automáticamente por Android Studio al elegir una actividad.
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    Intent intent2 = new Intent(FavoritePages.this, MainActivity.class);
+                    startActivity(intent2);
+                    return true;
+                case R.id.navigation_dashboard:
+                    Intent intent = new Intent(FavoritePages.this, ViewPage.class);
+                    startActivity(intent);
+                    return true;
+                case R.id.navigation_notifications:
+                    return true;
+            }
+            return false;
+        }
+    };
+
+    //Muestra toast con el String que ponga
     private void showMessage(int message){
         Context context = getApplicationContext();
         CharSequence text = getResources().getString(message);
@@ -77,6 +113,35 @@ public class FavoritePages extends ListActivity {
         setListAdapter(items);
     }
 
+    //Menu contextual
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context, menu);
+    }
+
+    //Menu contextual para borrar la web seleccionada
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo delW = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        mLastRowSelected = delW.position;
+        switch (item.getItemId()) {
+            case R.id.delete_item:
+                new AlertDialog.Builder(this).setTitle(
+                        this.getString(R.string.delete)).setMessage(
+                        R.string.delete).setPositiveButton(
+                        android.R.string.ok, new AlertDialog.OnClickListener() {
+                            public void onClick(DialogInterface dlg, int i) {
+                                deleteEntry();
+                            }									}).setNegativeButton(android.R.string.cancel, null).show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    //Metodo para borrar
     protected void deleteEntry() {
         try{
             mDbHelper.open();
@@ -113,7 +178,7 @@ public class FavoritePages extends ListActivity {
             View row = mInflater.inflate(R.layout.row_list, null);
             //rellenamos datos
             TextView name = (TextView) row.findViewById(R.id.row_name);
-            TextView url = (TextView) row.findViewById(R.id.url);
+            TextView url = (TextView) row.findViewById(R.id.row_url);
             name.setText(listEntry.name);
             url.setText(listEntry.url);
 
@@ -125,4 +190,5 @@ public class FavoritePages extends ListActivity {
         String name;
         String url;
     }
+
 }

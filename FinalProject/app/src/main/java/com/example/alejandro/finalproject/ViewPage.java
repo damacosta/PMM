@@ -1,6 +1,8 @@
 package com.example.alejandro.finalproject;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,14 +22,20 @@ import android.widget.Toast;
 
 import java.sql.SQLException;
 
+import static com.example.alejandro.finalproject.FavoritePages.mDbHelper;
+
 //TODO HACER ALERTDIALOG PARA GUARDAR NOMBRE DE PÁGINA WEB
-public class ViewPage extends AppCompatActivity {
+public class ViewPage extends Activity {
 
     Button visualizar;
     Button favoritos;
     EditText url;
     TextView textView;
     BottomNavigationView navigation;
+    EditText input;
+    String newNombre;
+    String newUrl;
+    AlertDialog.Builder alert;
 
     Integer mRowId = null;
 
@@ -56,6 +64,7 @@ public class ViewPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_page);
+        mDbHelper = new DataBaseHelper(this);
 
         textView = findViewById(R.id.textView);
         visualizar = findViewById(R.id.visualizar);
@@ -79,13 +88,46 @@ public class ViewPage extends AppCompatActivity {
             }
         });
 
-       /* favoritos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Guardar();
+        //Crea un nuevo AlertDialog
+        alert = new AlertDialog.Builder(this);
+
+        //Le añade el títu lo y el mensaje
+        alert.setTitle(R.string.titledialog);
+        alert.setMessage(R.string.messagedialog);
+        //Crea un EditText y se lo asigna al AlertDialog creado anteriormente
+        input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //Recoge los datos del AlertDialog y del EditText de la url a buuscar y los inserta en la BD cuando pulses Ok
+                mDbHelper.open();
+                if (mRowId == null){
+                    newNombre = input.getText().toString();
+                    newUrl = "http://" + url.getText().toString();
+                    mDbHelper.insertItem(newNombre, newUrl);
+                    showMessage(R.string.guardado);
+                }
+
             }
         });
-        */
+
+        alert.setNegativeButton(R.string.cancelar,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //Cuando pulses cancelar, cancelará el AlertDialog
+                        dialog.cancel();
+                    }
+                });
+
+        favoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Muestra el AlertDialog
+                alert.show();
+            }
+        });
+
         navigation= findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -112,19 +154,6 @@ public class ViewPage extends AppCompatActivity {
         imm.hideSoftInputFromWindow(visualizar.getWindowToken(), 0);
     }
 
-    /*protected void Guardar() {
-        String newUrl = "http://" + url.getText().toString();
-        try{
-            FavoritePages.mDbHelper.open();
-            if (mRowId == null){
-                //insertar
-                FavoritePages.mDbHelper.insertItem(newUrl);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showMessage(R.string.dataError);
-        }
 
-    } */
 
 }

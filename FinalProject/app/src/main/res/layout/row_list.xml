@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:gravity="center"
-        android:textSize="10dp"
+        android:textSize="30dp"
         android:textStyle="bold"
         android:textAllCaps="true"/>
 
@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/row_name"
         android:ellipsize="marquee"
-
+        android:textSize="20dp"
         android:fadingEdge="horizontal"
-        android:gravity="right"/>
+        android:gravity="center"/>
 
 </RelativeLayout>

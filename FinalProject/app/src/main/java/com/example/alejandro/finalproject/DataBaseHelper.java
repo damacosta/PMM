@@ -87,4 +87,6 @@ public class DataBaseHelper {
         cv.put(SL_URL, url);
         return mDb.update(DATABASE_TABLE_TODOLIST, cv, SL_ID + "=?", new String[]{Integer.toString(ident)});
     }
+
+
 }

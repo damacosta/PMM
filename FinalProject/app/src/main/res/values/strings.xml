@@ -5,5 +5,17 @@
     <string name="title_view_page">View page</string>
     <string name="title_favorite_pages">Favorite pages</string>
     <string name="dataError">Error al obtener los datos</string>
+    <string name="guardado">Página guardada en favoritos correctamente</string>
+    <string name="ok">Ok</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="titledialog">FAVORITOS</string>
+    <string name="messagedialog">Introduzca un nombre para guardar en favoritos...</string>
+    <string name="editItem">Editar página</string>
+    <string name="deleteItem">Borrar página</string>
+    <string name="delete">¿Borrar?</string>
+    <string name="nodelete">Imposible borrar. Seguro activado.</string>
+
+
+
 
 </resources>
